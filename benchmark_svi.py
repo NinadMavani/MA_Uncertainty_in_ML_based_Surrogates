@@ -52,7 +52,7 @@ class DynamicBNN(PyroModule):
     def __init__(self, input_dim=1, output_dim=1, hidden_dims=[10, 10], prior_scale=[10.0, 10.0]):
         super().__init__()
         
-        self.activation = nn.Tanh()  # You can also pass this as an argument if needed
+        self.activation = nn.Tanh()  # Can also be passed as an argument
         
         self.hidden_layers = nn.ModuleList()
         self.prior_scale = prior_scale

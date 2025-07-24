@@ -1,5 +1,5 @@
 from numpyro.infer import MCMC, NUTS
-from inference.base_inference import InferenceEngine
+from MA_Uncertainty_in_ML_based_Surrogates.base_inference import InferenceEngine
 
 class HMCInference(InferenceEngine):
     """

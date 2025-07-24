@@ -1,8 +1,9 @@
 import os
 from config import get_args
-from models.bnn_model import BNNModel
-from inference import *
-from utils import *
+from bnn_model import BNNModel
+from bnn_model_hetero import BNNModel_Hetero
+from base_inference import InferenceEngine
+from hmc_inference import HMCInference
 import numpyro
 import jax.random as random
 from jax import vmap
@@ -12,10 +13,12 @@ from numpyro.infer import Predictive
 from data import *
 import seaborn as sns
 
-pid = os.getpid()
-print("PID : ", pid ,"\n")
+from utils import *
 
-# Implementation closely follows work by Audrey Olivier: https://github.com/AudOlivier/UQ_in_ML
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+
 
 
 def predict(model, rng_key, samples, X):
@@ -25,7 +28,6 @@ def predict(model, rng_key, samples, X):
     substituted_model = handlers.substitute(handlers.seed(model, rng_key), samples)
     trace = handlers.trace(substituted_model).get_trace(X=X, Y=None)
     return trace["Y_observed"]["value"] # Set this to Y_observed for correct shape
-
 
 def main():
     """
